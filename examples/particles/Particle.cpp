@@ -16,8 +16,7 @@ Particles::Particles(){}
 Particles::~Particles(){}
 
 // Adds a particle to particles[]
-void Particles::addParticle(Particle *particle)
-{
+void Particles::addParticle(Particle *particle) {
     // don't exceed the max! 
     if (activeParticles >= MAX_PARTICLES)
         return;
@@ -27,20 +26,26 @@ void Particles::addParticle(Particle *particle)
 }
 
 // replaces particles[index] with last particle in the list
-void Particles::delParticle(byte index)
-{
+void Particles::delParticle(byte index) {
     particles[index] = particles[activeParticles - 1];
     activeParticles--;
 }
 
 // updates the posisitions of all the particles with their velocities
-void Particles::moveParticles()
-{
+void Particles::moveParticles() {
     byte i;
     
     // This is what deccelerates the particles.
-    for (i = 0; i < activeParticles; i++)
-    {
+    for (i = 0; i < activeParticles; i++) {
+        // and delete stopped particles from the list.
+        if (particles[i].velX / SCALER == 0) {
+            delParticle(i);
+            
+            // this particle is being replaced with the one at the end 
+            // of the list, so we have to take a step back 
+            i--; 
+        }
+
         particles[i].x += particles[i].velX / SCALER;    // calculate true velocity
         
         if (particles[i].velX > 0) {
@@ -49,22 +54,11 @@ void Particles::moveParticles()
             particles[i].velX++;        // add to negative numbers
         }
         
-        // and delete stopped particles from the list.
-        // perhaps I should move this to up about 15 lines, so that stopped
-        //  pixels can be deleted from the sketch.
-        if (particles[i].velX / SCALER == 0) {
-            delParticle(i);
-            
-            // this particle is being replaced with the one at the end 
-            // of the list, so we have to take a step back 
-            i--; 
-        }
     }
 }
 
 // creates num_parts particles at x,y with random velocities
-void Particles::createExplosion(byte x, byte num_parts)
-{
+void Particles::createExplosion(byte x, byte num_parts) {
     byte i;
     Particle particle;
     
@@ -77,8 +71,7 @@ void Particles::createExplosion(byte x, byte num_parts)
     }
 }
 
-byte Particles::getActiveParticles()
-{
+byte Particles::getActiveParticles() {
     return activeParticles;
 }
 

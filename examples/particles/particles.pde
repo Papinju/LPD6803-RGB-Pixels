@@ -88,11 +88,11 @@ void drawParticles() {
   byte i;
     
   for (i = 0; i < parts.getActiveParticles(); i++) {
-    int x = parts.particles[i].x;
+    byte x = parts.particles[i].x;
     if ((x < 0) || (x > PIXELS))
       continue;
 
-    int velX = parts.particles[i].velX;   
+    byte velX = parts.particles[i].velX;   
     if (velX > 0) {
       velX++;
     } else {
