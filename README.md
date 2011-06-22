@@ -7,5 +7,7 @@ LPD6803 Library
 voltage output.
 
 
-##
+## Where to buy
+I sell those square LPD6803 led modules at http://pixelinvaders.ch/
+
 
